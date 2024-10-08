@@ -30,9 +30,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Initial state
 const initialState: AuthState = {
-    isAuthenticated: false,
+    isAuthenticated: !!localStorage.getItem('token'), // Check token in localStorage
     user: null,
-    token: null,
+    token: localStorage.getItem('token'), // Load token from localStorage
 };
 
 // Reducer function
@@ -47,6 +47,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
                 token: action.payload?.token || null,
             };
         case 'LOGOUT':
+            localStorage.removeItem('token'); // Remove token on logout
             return initialState; // Reset to initial state on logout
         default:
             return state;
@@ -66,7 +67,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const loginUser = async (credentials: Record<string, unknown>) => {
         try {
             const data = await login(credentials);
-            dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+            if (data.token) {
+                localStorage.setItem('token', data.token); // Store token in localStorage
+                dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+            }
         } catch (error) {
             console.error('Login failed:', error);
             // Optionally, you can dispatch an action here to handle the error
@@ -77,7 +81,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     const registerUser = async (userData: Record<string, unknown>) => {
         try {
             const data = await register(userData);
-            dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+            if (data.token) {
+                localStorage.setItem('token', data.token); // Store token in localStorage
+                dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+            }
         } catch (error) {
             console.error('Registration failed:', error);
             // Optionally, you can dispatch an action here to handle the error

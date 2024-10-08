@@ -28,24 +28,24 @@ interface Product {
 }
 
 // Enregistrement d'un nouvel utilisateur
-export const register = async (userData: Record<string, unknown>): Promise<TokenResponse> => {
+export const register = async (userData: UserData): Promise<TokenResponse> => {
     try {
         const response = await axios.post<TokenResponse>(`${API_URL}/auth/users/register/`, userData);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de l\'enregistrement:', error);
-        throw error;
+        throw error; // Relance l'erreur pour que le gestionnaire d'erreur puisse la traiter
     }
 };
 
 // Connexion de l'utilisateur
-export const login = async (credentials: Record<string, unknown>): Promise<TokenResponse> => {
+export const login = async (credentials: Credentials): Promise<TokenResponse> => {
     try {
         const response = await axios.post<TokenResponse>(`${API_URL}/auth/users/login/`, credentials);
         return response.data;
     } catch (error) {
-        console.error('Erreur lors du connexion:', error);
-        throw error;
+        console.error('Erreur lors de la connexion:', error);
+        throw error; // Relance l'erreur pour que le gestionnaire d'erreur puisse la traiter
     }
 };
 
@@ -59,7 +59,7 @@ export const logout = async (token: string): Promise<void> => {
         });
     } catch (error) {
         console.error('Erreur lors de la déconnexion:', error);
-        throw error;
+        throw error; // Relance l'erreur pour que le gestionnaire d'erreur puisse la traiter
     }
 };
 
@@ -74,6 +74,6 @@ export const getProducts = async (token: string): Promise<Product[]> => {
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des produits:', error);
-        throw error;
+        throw error; // Relance l'erreur pour que le gestionnaire d'erreur puisse la traiter
     }
 };

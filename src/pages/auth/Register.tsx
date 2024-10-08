@@ -1,13 +1,16 @@
-import  { useContext, useState, FormEvent } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { useContext, useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom'; // Assurez-vous d'importer useNavigate
+import { AuthContext } from '../../context/AuthContext.tsx';
 
 const Register = () => {
     const { registerUser } = useContext(AuthContext)!;
     const [userData, setUserData] = useState({ username: '', password: '', email: '' });
+    const navigate = useNavigate(); // Utilisation de useNavigate
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        registerUser(userData);
+        await registerUser(userData);
+        navigate('/dashboard'); // Redirige vers la page d'accueil ou une autre page
     };
 
     return (

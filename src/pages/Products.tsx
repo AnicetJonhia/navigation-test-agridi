@@ -1,13 +1,13 @@
 import  { useEffect, useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { getProducts } from '../services/api';
+import { AuthContext } from '../context/AuthContext.tsx';
+import { getProducts } from '../services/api.ts';
 
 interface Product {
     id: number;
     name: string;
 }
 
-const ProductList = () => {
+const Products = () => {
     const { state } = useContext(AuthContext)!;
     const [products, setProducts] = useState<Product[]>([]);
 
@@ -36,4 +36,4 @@ const ProductList = () => {
     );
 };
 
-export default ProductList;
+export default Products;
