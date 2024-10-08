@@ -1,4 +1,4 @@
-import { createContext, useReducer, ReactNode } from 'react';
+import { createContext, useReducer, ReactNode, useContext } from 'react';
 import { login, register, logout } from '../services/api';
 
 // Updated state interface
@@ -12,8 +12,8 @@ interface AuthState {
 interface AuthAction {
     type: 'LOGIN_SUCCESS' | 'LOGOUT' | 'REGISTER_SUCCESS' | 'SET_USER';
     payload?: {
-        user: Record<string, unknown>;
-        token: string;
+        user?: Record<string, unknown>;
+        token?: string;
     };
 }
 
@@ -23,33 +23,22 @@ interface AuthContextType {
     loginUser: (credentials: Record<string, unknown>) => Promise<void>;
     registerUser: (userData: Record<string, unknown>) => Promise<void>;
     logoutUser: () => Promise<void>;
-
 }
 
+// Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Initial state
 const initialState: AuthState = {
     isAuthenticated: false,
     user: null,
     token: null,
 };
 
+// Reducer function
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
-            return {
-                ...state,
-                isAuthenticated: true,
-                user: action.payload?.user || null,
-                token: action.payload?.token || null,
-            };
-        case 'LOGOUT':
-            return {
-                ...state,
-                isAuthenticated: false,
-                user: null,
-                token: null,
-            };
         case 'REGISTER_SUCCESS':
             return {
                 ...state,
@@ -57,19 +46,23 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
                 user: action.payload?.user || null,
                 token: action.payload?.token || null,
             };
-
+        case 'LOGOUT':
+            return initialState; // Reset to initial state on logout
         default:
             return state;
     }
 };
 
+// AuthProvider props interface
 interface AuthProviderProps {
     children: ReactNode;
 }
 
+// AuthProvider component
 const AuthProvider = ({ children }: AuthProviderProps) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
+    // Login function
     const loginUser = async (credentials: Record<string, unknown>) => {
         try {
             const data = await login(credentials);
@@ -80,6 +73,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     };
 
+    // Register function
     const registerUser = async (userData: Record<string, unknown>) => {
         try {
             const data = await register(userData);
@@ -90,6 +84,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     };
 
+    // Logout function
     const logoutUser = async () => {
         try {
             await logout(state.token!);
@@ -100,13 +95,20 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     };
 
-
-
     return (
-        <AuthContext.Provider value={{ state, loginUser, registerUser, logoutUser}}>
+        <AuthContext.Provider value={{ state, loginUser, registerUser, logoutUser }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export { AuthContext, AuthProvider };
+// Custom hook for using AuthContext
+const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};
+
+export { AuthContext, AuthProvider, useAuth };
