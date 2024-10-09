@@ -53,101 +53,98 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: '#212121' }}>
-        <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div className="flex flex-row items-center gap-2 mr-4    ">  {/* Utilisation de flex-row */}
-            <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                sx={{mr: 1}}
-            >
-              <MenuIcon/>
-            </IconButton>
-
-            {/* Logo and title */}
-            <div className="flex flex-row gap-1 items-center"> {/* Alignement horizontal avec gap minimal */}
-              <img src={logo} alt="Agri-Di logo" className="w-6 h-6"/> {/* Taille fixe du logo */}
-              <p className="text-[24px] leading-6 font-inter font-[400] text-white">AgriD</p>  {/* Texte réduit */}
-            </div>
-          </div>
 
 
-          {/* Search bar */}
-          <Search sx={{flexGrow: 1, maxWidth: '400px', marginLeft: '20px'}}>
-            <SearchIconWrapper>
-              <SearchIcon/>
-            </SearchIconWrapper>
-            <StyledInputBase
-                placeholder="Search…"
-                inputProps={{'aria-label': 'search'}}
-            />
-          </Search>
 
-          {/* Icon buttons for notifications and profile */}
-          <Box sx={{display: 'flex', alignItems: 'center'}}>
-            <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon/>
-              </Badge>
-            </IconButton>
-            <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-            >
-              <AccountCircle/>
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMenu}
-    </Box>
-  );
+// @ts-ignore
+export default function Navbar({ toggleSidebar }) {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const isMenuOpen = Boolean(anchorEl);
+
+    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const menuId = 'primary-search-account-menu';
+    const renderMenu = (
+        <Menu
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            id={menuId}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+            }}
+            open={isMenuOpen}
+            onClose={handleMenuClose}
+        >
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        </Menu>
+    );
+
+    return (
+        <Box  sx={{ flexGrow: 1 ,   borderBottom: '1px solid #A1A1A1' }}>
+            <AppBar position="static" sx={{ backgroundColor: '#171717' }}>
+                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div className="flex flex-row items-center gap-2 mr-4">
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            sx={{ mr: 1 }}
+                            onClick={toggleSidebar} // Ajoutez cette ligne pour appeler toggleSidebar
+                        >
+                            <MenuIcon />
+                        </IconButton>
+
+                        {/* Logo et titre */}
+                        <div className="flex flex-row gap-1 items-center">
+                            <img src={logo} alt="Agri-Di logo" className="w-6 h-6" />
+                            <p className=" text-[24px] leading-6 font-inter font-[400] text-white">AgriD</p>
+                        </div>
+                    </div>
+
+                    {/* Barre de recherche */}
+                    <Search sx={{ flexGrow: 1, maxWidth: '400px', marginLeft: '20px' }}>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+                    </Search>
+
+                    {/* Icônes de notification et de profil */}
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
+                            <Badge badgeContent={17} color="error">
+                                <NotificationsIcon />
+                            </Badge>
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-controls={menuId}
+                            aria-haspopup="true"
+                            onClick={handleProfileMenuOpen}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            {renderMenu}
+        </Box>
+    );
 }
