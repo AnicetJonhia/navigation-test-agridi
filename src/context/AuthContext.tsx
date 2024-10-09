@@ -118,4 +118,5 @@ const useAuth = (): AuthContextType => {
     return context;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { AuthContext, AuthProvider, useAuth };

@@ -92,6 +92,7 @@ export default function Sidebar({ setIsSidebarOpen }) {
 }
 
 // Composant SidebarItem
+// @ts-ignore
 function SidebarItem({ icon, label, link, activeItem, setActiveItem, setIsSidebarOpen, isMobile }) {
     return (
         <Link
@@ -109,6 +110,7 @@ function SidebarItem({ icon, label, link, activeItem, setActiveItem, setIsSideba
 }
 
 // Composant SidebarSubItem
+// @ts-ignore
 function SidebarSubItem({ icon, label, link, activeItem, setActiveItem, setIsSidebarOpen, isMobile }) {
     return (
         <Link

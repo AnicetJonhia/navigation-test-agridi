@@ -3,7 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Login from './pages/auth/Login.tsx';
 import Register from './pages/auth/Register.tsx';
 import Products from './pages/Products.tsx';
-import Logout from "./pages/auth/Logout.tsx";
+
 import Dashboard from "./pages/Dashboard.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import MainLayout from "./layouts/MainLayout.tsx";
@@ -14,6 +14,8 @@ import Stats from "./pages/Stats.tsx";
 import Needs from "./pages/Needs.tsx";
 import Orders from "./pages/Orders.tsx";
 
+import Logout from "./components/Logout.tsx";
+
 function App() {
     return (
         <AuthProvider>
@@ -22,7 +24,7 @@ function App() {
                     {/* Routes accessibles sans authentification */}
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
-                    <Route path="/logout" element={<Logout />} />
+                    <Route path={"/logout"} element={<Logout />} />
 
                     {/* Routes accessibles après authentification avec le layout principal */}
                     <Route element={<MainLayout />}>
@@ -35,7 +37,7 @@ function App() {
                           <Route path="/seasons" element={<Seasons />} />
                           <Route path="/private-chat" element={<PrivateChat />} />
                           <Route path="/group-chat" element={<GroupChat />} />
-                        =
+
 
                     </Route>
                 </Routes>
