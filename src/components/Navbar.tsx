@@ -19,7 +19,7 @@ import logo from '../assets/images/logo.png';
 import avatar from '../assets/images/profile/avatar.png';
 import Logout from "./Logout.tsx";
 
-
+import { BorderBeam } from "@/components/ui/border-beam";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -137,7 +137,7 @@ export default function Navbar({ toggleSidebar }) {
       {/* Modal personnalisé positionné à droite sous la Navbar */}
       {openModal && (
           <Box
-              sx={{ ...modalStyle, transform: openModal ? 'translateY(0)' : 'translateY(-20px)', opacity: 0.95 }}
+              sx={{ ...modalStyle, transform: openModal ? 'translateY(0)' : 'translateY(-20px)', opacity: 0.95 , right:"5px"  }}
               onClick={(e) => e.stopPropagation()} // Éviter que les clics sur le modal ferment le modal
           >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -159,6 +159,9 @@ export default function Navbar({ toggleSidebar }) {
                   Profile
               </Button>
               <Logout />
+
+            <BorderBeam size={250} duration={12} delay={9} />
+
           </Box>
       )}
     </Box>
