@@ -16,12 +16,13 @@ import Orders from "./pages/Orders.tsx";
 
 import Logout from "./components/Logout.tsx";
 
+
 function App() {
     return (
         <AuthProvider>
             <BrowserRouter>
                 <Routes>
-                    {/* Routes accessibles sans authentification */}
+
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path={"/logout"} element={<Logout />} />

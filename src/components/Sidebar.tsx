@@ -15,6 +15,8 @@ import groupChat from "../assets/images/group-chat.png";
 import logo from "../assets/images/logo.png";
 import exit from "../assets/images/exit.png";
 
+import { CoolMode }  from "../components/ui/cool-mode.tsx";
+
 // @ts-ignore
 export default function Sidebar({ setIsSidebarOpen }) {
     const [activeItem, setActiveItem] = useState('Dashboard');
@@ -95,7 +97,9 @@ export default function Sidebar({ setIsSidebarOpen }) {
 // @ts-ignore
 function SidebarItem({ icon, label, link, activeItem, setActiveItem, setIsSidebarOpen, isMobile }) {
     return (
-        <Link
+
+      <CoolMode>
+            <Link
             to={link}
             className={`flex flex-row justify-start items-center gap-3 w-full px-3 py-2.5 rounded-lg ${activeItem === label ? 'bg-[#149911]' : 'hover:bg-gray-700'} transition-all duration-300 ease-in-out cursor-pointer`}
             onClick={() => {
@@ -106,6 +110,7 @@ function SidebarItem({ icon, label, link, activeItem, setActiveItem, setIsSideba
             <img src={icon} alt="" className="w-5 h-5" />
             <p className="text-sm leading-[143%] font-inter font-[500] tracking-[-0.28px]">{label}</p>
         </Link>
+      </CoolMode>
     );
 }
 
@@ -113,7 +118,8 @@ function SidebarItem({ icon, label, link, activeItem, setActiveItem, setIsSideba
 // @ts-ignore
 function SidebarSubItem({ icon, label, link, activeItem, setActiveItem, setIsSidebarOpen, isMobile }) {
     return (
-        <Link
+        <CoolMode>
+            <Link
             to={link}
             className={`flex flex-row justify-center items-center gap-3 w-full px-3 py-2.5 rounded-lg ${activeItem === label ? 'bg-[#149911]' : 'hover:bg-gray-700'} transition-all duration-300 ease-in-out cursor-pointer`}
             onClick={() => {
@@ -124,5 +130,6 @@ function SidebarSubItem({ icon, label, link, activeItem, setActiveItem, setIsSid
             <img src={icon} alt="" className="w-5 h-5" />
             <p className="text-xs leading-[133%] font-inter font-[500] tracking-[-0.24px]">{label}</p>
         </Link>
+        </CoolMode>
     );
 }

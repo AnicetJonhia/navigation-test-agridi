@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 
+import Particles from "../components/ui/particles";
+
 export default function MainLayout() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar fermée par défaut
 
@@ -35,6 +37,13 @@ export default function MainLayout() {
                 {/* Contenu principal */}
                 <main className="flex-grow p-4 ">
                     <Outlet />
+                    <Particles
+                        className="absolute inset-0"
+                        quantity={100}
+                        ease={80}
+                        color={"#ffffff"}
+                        refresh
+                      />
                 </main>
             </div>
         </div>
